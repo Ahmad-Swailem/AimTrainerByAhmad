@@ -1,1 +1,1 @@
-pls feel free to use this code as a tamplate
+Feel free to use this project as a start tamplate if you linked my github it would be nice but you don't have to
