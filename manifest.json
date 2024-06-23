@@ -1,0 +1,9 @@
+{
+    "name": "Aim Trainer",
+    "short_name": "AT",
+    "theme_color": "#727f89",
+    "background_color": "#666d72",
+    "display": "fullscreen",
+    "scope": "./",
+    "start_url": "/index.html"
+  }
