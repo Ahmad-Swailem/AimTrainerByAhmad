@@ -7,13 +7,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="gameArea">
-        <div id="score">Punkte: 0</div>
-        <div id="buttons">
-            <button id="multiplier">Punkte-Multiplikator (Kosten: 20 Punkte)</button>
-            <button id="buyButton">Kaufe Knopf (Kosten: 50 Punkte)</button>
+    <div id="languageSelector">
+        <button class="dropbtn"><img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="Deutsch" class="flag" id="currentLang"></button>
+        <div class="dropdown-content">
+            <a href="#" id="de"><img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="Deutsch" class="flag"> Deutsch</a>
+            <a href="#" id="en"><img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="English" class="flag"> English</a>
         </div>
-        <div class="rami">Klick mich</div>
+    </div>
+    <div id="gameArea">
+        <div id="score" data-lang="score">Punkte: 0</div>
+        <div class="rami" data-lang="clickMe">Klick mich</div>
+        <div class="rami" data-lang="clickMe">Klick mich</div>
+        <div id="buttons">
+            <button id="multiplier" data-lang="multiplier">Punkte-Multiplikator (Kosten: 20 Punkte)</button>
+            <button id="buyButton" data-lang="buyButton">Kaufe Knopf (Kosten: 50 Punkte)</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

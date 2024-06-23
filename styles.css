@@ -11,13 +11,58 @@ body {
     user-select: none; /* Standard */
 }
 
+#languageSelector {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.flag {
+    width: 30px;
+    height: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+#languageSelector:hover .dropdown-content {
+    display: block;
+}
+
 #gameArea {
     text-align: center;
     position: relative;
-    width: 80vw;
-    height: 80vh;
+    width: 90vw;
+    height: 90vh;
     border: 2px solid #ccc;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .rami {
@@ -27,11 +72,10 @@ body {
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
-    position: 10;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     color: white;
     font-weight: bold;
     text-align: center;
@@ -40,25 +84,15 @@ body {
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard */
     transition: transform 0.2s ease;
+    z-index: 10; /* Ensure circles are on top */
 }
 
 #score {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 10px;
     position: absolute;
     top: 10px;
     left: 10px;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none; /* Standard */
-}
-
-#timer {
-    font-size: 24px;
-    margin-bottom: 10px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard */
@@ -69,6 +103,9 @@ body {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard */
@@ -77,15 +114,34 @@ body {
 button {
     margin: 5px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
     color: white;
+    box-sizing: border-box;
 }
 
 button:disabled {
     background-color: #999;
     cursor: not-allowed;
+}
+
+/* Media Queries for different screen sizes */
+@media (min-width: 600px) {
+    .rami {
+        width: 70px;
+        height: 70px;
+        font-size: 14px;
+    }
+
+    #score {
+        font-size: 24px;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
 }
