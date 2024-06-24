@@ -182,6 +182,7 @@ flags.forEach(flag => {
 });
 klickerButtons.forEach(klicker => {
     klicker.addEventListener('click', updateScore);
+    moveKlicker();
 });
 multiplierButton.addEventListener('click', activateMultiplier);
 buyButton.addEventListener('click', buyKlickerButton);
