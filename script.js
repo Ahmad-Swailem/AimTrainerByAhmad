@@ -8,8 +8,11 @@ let areaIncreaseCost = 200;
 
 const scoreDisplay = document.getElementById('score');
 const levelDisplay = document.getElementById('level');
-const CklickerButtons = document.querySelectorAll('.cklicker');
+const klickerButtons = document.querySelectorAll('.klicker');
 const gameArea = document.getElementById('gameArea');
+const shopButton = document.getElementById('shopButton');
+const shop = document.getElementById('shop');
+const closeShopButton = document.getElementById('closeShop');
 const multiplierButton = document.getElementById('multiplier');
 const buyButton = document.getElementById('buyButton');
 const reduceCostButton = document.getElementById('reduceCost');
@@ -25,7 +28,10 @@ const translations = {
         multiplier: 'Punkte-Multiplikator (Kosten: ',
         buyButton: 'Kaufe Knopf (Kosten: ',
         reduceCost: 'Kostenreduzierung (Kosten: ',
-        increaseArea: 'Spielbereich vergrößern (Kosten: '
+        increaseArea: 'Spielbereich vergrößern (Kosten: ',
+        shopTitle: 'Shop',
+        closeShop: 'Schließen',
+        shopButton: 'Shop'
     },
     en: {
         score: 'Score: ',
@@ -34,40 +40,35 @@ const translations = {
         multiplier: 'Points Multiplier (Cost: ',
         buyButton: 'Buy Button (Cost: ',
         reduceCost: 'Reduce Cost (Cost: ',
-        increaseArea: 'Increase Area (Cost: '
+        increaseArea: 'Increase Game Area (Cost: ',
+        shopTitle: 'Shop',
+        closeShop: 'Close',
+        shopButton: 'Shop'
     }
 };
 
 function updateScore() {
     score += multiplier;
     scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
-    if (score >= level * 100) {
+    if (score > level * 100) {
         level++;
         levelDisplay.textContent = `${translations[currentLang].level}${level}`;
     }
-    moveCklicker();
-    updateButtons();
     saveGame();
+    updateButtons();
 }
 
-function moveCklicker() {
-    document.querySelectorAll('.Cklicker').forEach(Cklicker => {
-        let x, y, CklickerRect, overlap;
+function moveKlicker() {
+    const klickerButtons = document.querySelectorAll('.klicker');
+    klickerButtons.forEach(klicker => {
+        let x, y;
+        let klickerRect;
         do {
-            x = Math.random() * (gameArea.clientWidth - Cklicker.clientWidth);
-            y = Math.random() * (gameArea.clientHeight - Cklicker.clientHeight);
-            Cklicker.style.transform = `translate(${x}px, ${y}px)`;
-            CklickerRect = Cklicker.getBoundingClientRect();
-            overlap = false;
-            document.querySelectorAll('.Cklicker').forEach(otherCklicker => {
-                if (Cklicker !== otherCklicker) {
-                    const otherRect = otherCklicker.getBoundingClientRect();
-                    if (!(CklickerRect.right < otherRect.left || CklickerRect.left > otherRect.right || CklickerRect.bottom < otherRect.top || CklickerRect.top > otherRect.bottom)) {
-                        overlap = true;
-                    }
-                }
-            });
-        } while (overlap || CklickerRect.left < 0 || CklickerRect.top < 0 || CklickerRect.right > gameArea.clientWidth || CklickerRect.bottom > gameArea.clientHeight);
+            x = Math.random() * (gameArea.clientWidth - klicker.clientWidth);
+            y = Math.random() * (gameArea.clientHeight - klicker.clientHeight);
+            klicker.style.transform = `translate(${x}px, ${y}px)`;
+            klickerRect = klicker.getBoundingClientRect();
+        } while (klickerRect.left < 0 || klickerRect.top < 0 || klickerRect.right > gameArea.clientWidth || klickerRect.bottom > gameArea.clientHeight);
     });
 }
 
@@ -76,26 +77,26 @@ function activateMultiplier() {
         score -= multiplierCost;
         multiplier *= 2;
         multiplierCost *= 2;
-        multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]}`;
+        multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]})`;
         scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
         saveGame();
     }
     updateButtons();
 }
 
-function buyCklickerButton() {
+function buyKlickerButton() {
     if (score >= buttonCost) {
         score -= buttonCost;
-        const newCklicker = document.createElement('div');
-        newCklicker.classList.add('Cklicker');
-        newCklicker.textContent = translations[currentLang].clickMe;
-        newCklicker.addEventListener('click', updateScore);
-        gameArea.appendChild(newCklicker);
+        const newKlicker = document.createElement('div');
+        newKlicker.classList.add('klicker');
+        newKlicker.textContent = translations[currentLang].clickMe;
+        newKlicker.addEventListener('click', updateScore);
+        gameArea.appendChild(newKlicker);
         buttonCost *= 2;
-        buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]}`;
+        buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]})`;
         scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
         saveGame();
-        moveCklicker();
+        moveKlicker();
     }
     updateButtons();
 }
@@ -106,9 +107,9 @@ function reduceUpgradeCost() {
         multiplierCost = Math.max(10, Math.floor(multiplierCost / 2));
         buttonCost = Math.max(25, Math.floor(buttonCost / 2));
         reduceCost *= 2;
-        multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]}`;
-        buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]}`;
-        reduceCostButton.textContent = `${translations[currentLang].reduceCost}${reduceCost} ${translations[currentLang].score.split(':')[1]}`;
+        multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]})`;
+        buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]})`;
+        reduceCostButton.textContent = `${translations[currentLang].reduceCost}${reduceCost} ${translations[currentLang].score.split(':')[1]})`;
         scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
         saveGame();
     }
@@ -121,10 +122,10 @@ function increaseGameArea() {
         gameArea.style.width = `${gameArea.clientWidth * 1.2}px`;
         gameArea.style.height = `${gameArea.clientHeight * 1.2}px`;
         areaIncreaseCost *= 2;
-        increaseAreaButton.textContent = `${translations[currentLang].increaseArea}${areaIncreaseCost} ${translations[currentLang].score.split(':')[1]}`;
+        increaseAreaButton.textContent = `${translations[currentLang].increaseArea}${areaIncreaseCost} ${translations[currentLang].score.split(':')[1]})`;
         scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
         saveGame();
-        moveCklicker();
+        moveKlicker();
     }
     updateButtons();
 }
@@ -143,10 +144,10 @@ function changeLanguage(lang) {
     });
     scoreDisplay.textContent = `${translations[lang].score}${score}`;
     levelDisplay.textContent = `${translations[lang].level}${level}`;
-    multiplierButton.textContent = `${translations[lang].multiplier}${multiplierCost} ${translations[lang].score.split(':')[1]}`;
-    buyButton.textContent = `${translations[lang].buyButton}${buttonCost} ${translations[lang].score.split(':')[1]}`;
-    reduceCostButton.textContent = `${translations[lang].reduceCost}${reduceCost} ${translations[lang].score.split(':')[1]}`;
-    increaseAreaButton.textContent = `${translations[lang].increaseArea}${areaIncreaseCost} ${translations[lang].score.split(':')[1]}`;
+    multiplierButton.textContent = `${translations[lang].multiplier}${multiplierCost} ${translations[lang].score.split(':')[1]})`;
+    buyButton.textContent = `${translations[lang].buyButton}${buttonCost} ${translations[lang].score.split(':')[1]})`;
+    reduceCostButton.textContent = `${translations[lang].reduceCost}${reduceCost} ${translations[lang].score.split(':')[1]})`;
+    increaseAreaButton.textContent = `${translations[lang].increaseArea}${areaIncreaseCost} ${translations[lang].score.split(':')[1]})`;
     currentLang = lang;
     document.getElementById('currentLang').src = document.querySelector(`#${lang} img`).src;
 }
@@ -180,10 +181,10 @@ function loadGame() {
 
     scoreDisplay.textContent = `${translations[currentLang].score}${score}`;
     levelDisplay.textContent = `${translations[currentLang].level}${level}`;
-    multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]}`;
-    buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]}`;
-    reduceCostButton.textContent = `${translations[currentLang].reduceCost}${reduceCost} ${translations[currentLang].score.split(':')[1]}`;
-    increaseAreaButton.textContent = `${translations[currentLang].increaseArea}${areaIncreaseCost} ${translations[currentLang].score.split(':')[1]}`;
+    multiplierButton.textContent = `${translations[currentLang].multiplier}${multiplierCost} ${translations[currentLang].score.split(':')[1]})`;
+    buyButton.textContent = `${translations[currentLang].buyButton}${buttonCost} ${translations[currentLang].score.split(':')[1]})`;
+    reduceCostButton.textContent = `${translations[currentLang].reduceCost}${reduceCost} ${translations[currentLang].score.split(':')[1]})`;
+    increaseAreaButton.textContent = `${translations[currentLang].increaseArea}${areaIncreaseCost} ${translations[currentLang].score.split(':')[1]})`;
     updateButtons();
 }
 
@@ -196,14 +197,20 @@ flags.forEach(flag => {
     });
 });
 
-CklickerButtons.forEach(Cklicker => {
-    Cklicker.addEventListener('click', updateScore);
+klickerButtons.forEach(klicker => {
+    klicker.addEventListener('click', updateScore);
 });
 multiplierButton.addEventListener('click', activateMultiplier);
-buyButton.addEventListener('click', buyCklickerButton);
+buyButton.addEventListener('click', buyKlickerButton);
 reduceCostButton.addEventListener('click', reduceUpgradeCost);
 increaseAreaButton.addEventListener('click', increaseGameArea);
+shopButton.addEventListener('click', () => {
+    shop.classList.toggle('hidden');
+});
+closeShopButton.addEventListener('click', () => {
+    shop.classList.add('hidden');
+});
 
-moveCklicker();
+moveKlicker();
 updateButtons();
 loadGame();
